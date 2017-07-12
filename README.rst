@@ -26,10 +26,10 @@ Distributed under the Eclipse Public License either version 1.0 or (at your opti
 
 .. _Boot: https://github.com/boot-clj/boot
 
-.. |clojars| image:: https://img.shields.io/clojars/v/manenko/boot-electron.svg
+.. |clojars| image:: https://img.shields.io/clojars/v/manenko/boot-zip.svg
     :alt: Clojars
     :scale: 100%
-    :target: https://clojars.org/manenko/boot-electron
+    :target: https://clojars.org/manenko/boot-zip
 
 .. |license| image:: https://img.shields.io/badge/License-EPL%201.0-red.svg
     :alt: License: EPL-1.0
