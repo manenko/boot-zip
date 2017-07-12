@@ -6,7 +6,9 @@
                  [org.apache.commons/commons-compress "1.14"]])
 
 (require '[adzerk.bootlaces      :refer :all]
-         )
+         '[boot.core             :refer [deftask]]
+         '[manenko.boot-download :refer [download-file]]
+         '[manenko.boot-zip      :refer [compress-into-zip extract-from-zip]])
 
 (def +project+ 'manenko/boot-zip)
 (def +version+ "0.1.0-SNAPSHOT")
@@ -20,3 +22,13 @@
       :url         "https://github.com/manenko/boot-zip/"
       :scm         {:url "https://github.com/manenko/boot-zip/"}
       :license     {"EPL" "http://www.eclipse.org/legal/epl-v10.html"}})
+
+
+(deftask test-zip-extraction
+  []
+  (comp
+   (download-file :url "https://github.com/electron/electron/releases/download/v1.7.4/electron-v1.7.4-linux-x64.zip"
+                  :output-path "downloads/electron-v1.7.4-linux-x64.zip")
+   (extract-from-zip :archive    "downloads/electron-v1.7.4-linux-x64.zip"
+                     :output-dir "extracted/electron/v1.7.4/linux-x64")
+   (target)))
