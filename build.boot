@@ -1,8 +1,9 @@
 (set-env!
  :source-paths #{"src"}
- :dependencies '[[org.clojure/clojure     "1.8.0"             :scope "provided"]
-                 [adzerk/bootlaces        "0.1.13"            :scope "test"]
-                 [manenko/boot-download   "0.1.0-SNAPSHOT"    :scope "test"]])
+ :dependencies '[[org.clojure/clojure                 "1.8.0"             :scope "provided"]
+                 [adzerk/bootlaces                    "0.1.13"            :scope "test"]
+                 [manenko/boot-download               "0.1.0-SNAPSHOT"    :scope "test"]
+                 [org.apache.commons/commons-compress "1.14"]])
 
 (require '[adzerk.bootlaces      :refer :all]
          )
