@@ -26,9 +26,10 @@
 
 (deftask test-zip-extraction
   []
-  (comp
-   (download-file :url "https://github.com/electron/electron/releases/download/v1.7.4/electron-v1.7.4-linux-x64.zip"
-                  :output-path "downloads/electron-v1.7.4-linux-x64.zip")
-   (extract-from-zip :archive    "downloads/electron-v1.7.4-linux-x64.zip"
-                     :output-dir "extracted/electron/v1.7.4/linux-x64")
-   (target)))
+  (let [root "https://github.com/electron/electron/releases/download"]
+    (comp
+     (download-file :url         (str root "/v1.7.4/electron-v1.7.4-linux-x64.zip")
+                    :output-path "downloads/electron-v1.7.4-linux-x64.zip")
+     (extract-from-zip :archive    "downloads/electron-v1.7.4-linux-x64.zip"
+                       :output-dir "extracted/electron/v1.7.4/linux-x64")
+     (target))))
