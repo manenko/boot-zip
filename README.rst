@@ -12,9 +12,38 @@ boot-zip
 Tasks
 -----
 
+~~~~~~~~~~~~~~~~
+extract-from-zip
+~~~~~~~~~~~~~~~~
+
+.. code-block:: clojure
+
+   (extract-from-zip
+     [a archive    VAL str "Location of the ZIP archive that has to be extracted. Required."
+      o output-dir VAL str "Path to the output directory. Optional."])
+
+Extracts the given ZIP archive into the given directory preserving the
+Unix permissions.
+
+If the path to the output directory was not provided (or is empty)
+then extracts the archive into the project's root.
+
+
 ---------
 Functions
 ---------
+
+~~~~~
+unzip
+~~~~~
+
+.. code-block:: clojure
+
+   (unzip
+     [^File archive ^File output-dir])
+
+Extracts the given ZIP archive into the given directory while
+preserving the Unix permissions.
 
 -------
 License
