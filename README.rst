@@ -29,21 +29,6 @@ If the path to the output directory was not provided (or is empty)
 then extracts the archive into the project's root.
 
 
----------
-Functions
----------
-
-~~~~~
-unzip
-~~~~~
-
-.. code-block:: clojure
-
-   (unzip [^File archive ^File output-dir])
-
-Extracts the given ZIP archive into the given directory while
-preserving the Unix permissions.
-
 -------
 License
 -------
