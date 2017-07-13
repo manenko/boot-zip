@@ -39,8 +39,7 @@ unzip
 
 .. code-block:: clojure
 
-   (unzip
-     [^File archive ^File output-dir])
+   (unzip [^File archive ^File output-dir])
 
 Extracts the given ZIP archive into the given directory while
 preserving the Unix permissions.
