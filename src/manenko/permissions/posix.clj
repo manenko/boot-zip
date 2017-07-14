@@ -1,8 +1,8 @@
 (ns manenko.permissions.posix
   (:require [clojure.string :as str])
-  (:import  [java.nio.file           Files FileSystems]
-            [java.io                 File]
-            [java.nio.file.attribute PosixFilePermissions]))
+  (:import java.io.File
+           [java.nio.file Files FileSystems LinkOption]
+           java.nio.file.attribute.PosixFilePermissions))
 
 
 (defn octal-triad->symbolic-triad
@@ -21,6 +21,21 @@
     7 "rwx"))
 
 
+(defn symbolic-triad->octal-triad
+  "Converts one triad of POSIX permissions in symbolic notation to
+  octal notation."
+  [s]
+  (condp = s
+    "---" 0
+    "--x" 1
+    "-w-" 2
+    "-wx" 3
+    "r--" 4
+    "r-x" 5
+    "rw-" 6
+    "rwx" 7))
+
+
 (defn octal->symbolic
   "Converts the given POSIX file permissions in octal notation to symbolic notation.
 
@@ -35,6 +50,22 @@
                    [(bit-shift-right n 6)
                     (bit-and (bit-shift-right n 3) 007)
                     (bit-and n 007)]))))
+
+
+(defn symbolic->octal
+  "Converts the given POSIX file permissions in symbolic notation to
+  octal notation.
+
+  For example:
+
+  rwxrwxrwx -> 777
+  rw---x-w- -> 612
+  r--r--r-- -> 444"
+  [s]
+  (let [[owner group others] (mapv symbolic-triad->octal-triad (re-seq #".{1,3}" s))]
+    (bit-or (bit-shift-left owner 6)
+            (bit-shift-left group 3)
+            others)))
 
 
 (defn posix?
@@ -61,3 +92,14 @@
     (Files/setPosixFilePermissions
      (.toPath f)
      (PosixFilePermissions/fromString p))))
+
+(defn get-file-permissions
+  "Gets POSIX file permissions for the given file in symbolic notation.
+
+  If default filesystem is not POSIX compliant then returns nil."
+  [^File f]
+  (when (posix?)
+    (PosixFilePermissions/toString
+     (Files/getPosixFilePermissions
+      (.toPath f)
+      (make-array LinkOption 0)))))

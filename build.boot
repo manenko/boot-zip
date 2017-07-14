@@ -2,13 +2,16 @@
  :source-paths #{"src"}
  :dependencies '[[org.clojure/clojure                 "1.8.0"             :scope "provided"]
                  [adzerk/bootlaces                    "0.1.13"            :scope "test"]
+                 [adzerk/boot-test                    "1.2.0"             :scope "test"]
                  [manenko/boot-download               "0.1.0-SNAPSHOT"    :scope "test"]
+                 [boot/core                           "2.7.1"             :scope "test"]
                  [org.apache.commons/commons-compress "1.14"]])
 
 (require '[adzerk.bootlaces      :refer :all]
          '[boot.core             :refer [deftask]]
          '[manenko.boot-download :refer [download-file]]
-         '[manenko.boot-zip      :refer [compress-into-zip extract-from-zip]])
+         '[manenko.boot-zip      :refer [compress-into-zip extract-from-zip]]
+         '[adzerk.boot-test      :as    boot-test])
 
 (def +project+ 'manenko/boot-zip)
 (def +version+ "0.1.0-SNAPSHOT")
@@ -22,6 +25,27 @@
       :url         "https://github.com/manenko/boot-zip/"
       :scm         {:url "https://github.com/manenko/boot-zip/"}
       :license     {"EPL" "http://www.eclipse.org/legal/epl-v10.html"}})
+
+
+(deftask testing
+  []
+  (set-env! :source-paths #(conj % "test"))
+  identity)
+
+
+(ns-unmap 'boot.user 'test)
+(deftask test
+  []
+  (comp (testing)
+        (boot-test/test)))
+
+
+(deftask auto-test
+  []
+  (comp (testing)
+        (watch)
+        (speak)
+        (boot-test/test)))
 
 
 (deftask test-zip-extraction
