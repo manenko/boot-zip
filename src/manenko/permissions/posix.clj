@@ -43,9 +43,9 @@
   This is needed when we set file permissions: this is done only of
   the file system is POSIX compliant."
   []
-  (.contains
-   (.supportedFileAttributeViews (FileSystems/getDefault))
-   "posix"))
+  (-> (FileSystems/getDefault)
+      (.supportedFileAttributeViews)
+      (.contains "posix")))
 
 
 (defn set-file-permissions!
