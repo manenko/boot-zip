@@ -29,6 +29,22 @@ If the path to the output directory was not provided (or is empty)
 then extracts the archive into the project's root.
 
 
+~~~~~~~~~~~~~~~~~
+compress-into-zip
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: clojure
+
+   (compress-into-zip
+     [i input-dir VAL str "Location of the directory that should be compressed."
+      a archive   VAL str "Location of the output ZIP archive."])
+
+Compresses the content of the given directory and writes it to the
+given ZIP file preserving Unix permissions.
+
+The task will not put the folder itself to the archive, only its
+files and subdirectories (recursively).
+
 -------
 License
 -------

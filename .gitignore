@@ -2,3 +2,4 @@
 .nrepl-port
 .DS_Store
 /target/
+/test-compression/
