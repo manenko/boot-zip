@@ -9,8 +9,8 @@
   "Converts an octal number that represents POSIX file permissions for
   the single permission triad (owner, group, users) to symbolic
   notation."
-  [o]
-  (condp = o
+  [octal-triad]
+  (condp = octal-triad
     0 "---"
     1 "--x"
     2 "-w-"
@@ -24,8 +24,8 @@
 (defn symbolic-triad->octal-triad
   "Converts one triad of POSIX permissions in symbolic notation to
   octal notation."
-  [s]
-  (condp = s
+  [symbolic-triad]
+  (condp = symbolic-triad
     "---" 0
     "--x" 1
     "-w-" 2
@@ -44,8 +44,8 @@
   777 -> rwxrwxrwx
   612 -> rw---x-w-
   444 -> r--r--r--"
-  [n]
-  (let [n (bit-and n 0777)]
+  [octal]
+  (let [n (bit-and octal 0777)]
     (str/join (map octal-triad->symbolic-triad
                    [(bit-shift-right n 6)
                     (bit-and (bit-shift-right n 3) 007)
@@ -61,8 +61,9 @@
   rwxrwxrwx -> 777
   rw---x-w- -> 612
   r--r--r-- -> 444"
-  [s]
-  (let [[owner group others] (mapv symbolic-triad->octal-triad (re-seq #".{1,3}" s))]
+  [symbolic]
+  (let [[owner group others] (mapv symbolic-triad->octal-triad
+                                   (re-seq #".{1,3}" symbolic))]
     (bit-or (bit-shift-left owner 6)
             (bit-shift-left group 3)
             others)))
@@ -87,19 +88,20 @@
   rw-r--r--
   rw-r--r--
   rwxr-xr-x"
-  [^File f ^String p]
-  (when (posix?)
+  [file permissions]
+  (when (and permissions
+             (posix?))
     (Files/setPosixFilePermissions
-     (.toPath f)
-     (PosixFilePermissions/fromString p))))
+     (.toPath file)
+     (PosixFilePermissions/fromString permissions))))
 
 (defn get-file-permissions
   "Gets POSIX file permissions for the given file in symbolic notation.
 
   If default filesystem is not POSIX compliant then returns nil."
-  [^File f]
+  [file]
   (when (posix?)
     (PosixFilePermissions/toString
      (Files/getPosixFilePermissions
-      (.toPath f)
+      (.toPath file)
       (make-array LinkOption 0)))))
