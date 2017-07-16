@@ -16,7 +16,7 @@
 
 
 (def +project+ 'manenko/boot-zip)
-(def +version+ "0.1.0-SNAPSHOT")
+(def +version+ "0.2.0-SNAPSHOT")
 
 
 (bootlaces! +version+)
@@ -62,6 +62,7 @@
                        :output-dir "extracted/electron/v1.7.4/linux-x64")
      (target))))
 
+
 (deftask test-zip-extraction-compression
   []
   (let [root "https://github.com/electron/electron/releases/download"]
@@ -73,6 +74,7 @@
      (compress-into-zip :input-dir "extracted/electron/v1.7.4/linux-x64"
                         :archive   "archived/electron-v1.7.4-linux-x64.zip")
      (target))))
+
 
 (deftask test-zip-compression
   []

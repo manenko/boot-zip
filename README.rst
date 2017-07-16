@@ -1,5 +1,3 @@
-**WORK IS IN PROGRESS**
-
 ========
 boot-zip
 ========
