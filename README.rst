@@ -24,7 +24,7 @@ Extracts the given ZIP archive into the given directory preserving the
 Unix permissions.
 
 If the path to the output directory was not provided (or is empty)
-then extracts the archive into the project's root.
+then extracts the archive into the fileset's root.
 
 
 ~~~~~~~~~~~~~~~~~
@@ -34,8 +34,8 @@ compress-into-zip
 .. code-block:: clojure
 
    (compress-into-zip
-     [i input-dir VAL str "Location of the directory that should be compressed."
-      a archive   VAL str "Location of the output ZIP archive."])
+     [i input-dir VAL str "Location of the directory that should be compressed. Required."
+      a archive   VAL str "Location of the output ZIP archive. Required."])
 
 Compresses the content of the given directory and writes it to the
 given ZIP file preserving Unix permissions.
